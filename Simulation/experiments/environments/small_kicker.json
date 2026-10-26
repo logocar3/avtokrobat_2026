@@ -1,0 +1,10 @@
+{
+  "description": "A backyard-size jump for the 1/16 car: 25 deg kicker to a 0.25 m lip, 1 m gap, 0.25 m table top, landing slope.",
+  "start": { "position": [0, 0, null], "yaw_deg": 0 },
+  "pieces": [
+    { "type": "ground", "name": "run-up",    "x": [-3, 8],      "width": 4 },
+    { "type": "ramp",   "name": "kicker",    "x": [3, 3.536],   "z": [0, 0.25], "width": 1.2, "color": [0.85, 0.5, 0.35] },
+    { "type": "ramp",   "name": "table",     "x": [4.536, 5.2], "z": [0.25, 0.25], "width": 1.2, "color": [0.6, 0.6, 0.65] },
+    { "type": "ramp",   "name": "landing",   "x": [5.2, 6.2],   "z": [0.25, 0], "width": 1.2, "color": [0.85, 0.5, 0.35] }
+  ]
+}

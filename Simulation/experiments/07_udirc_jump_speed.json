@@ -1,0 +1,34 @@
+{
+  "description": "The M1 jump for the UDIRC 1610S (Unity engine): speed mode at 1880 rad/s motor (~7 m/s) to the lip and through the flight (wheels keep spinning, so no reaction torque on the chassis), then speed-mode brake to 0 after landing (t = 3.4 s). Braking the wheels in the air pitches the car nose-down (the M4 effect) and full torque (06) overshoots the landing with the light car.",
+  "scene": "jump",
+  "duration": 6.0,
+  "initial_state": {
+    "position": [
+      0,
+      0,
+      null
+    ]
+  },
+  "inputs": {
+    "motor_mode": "speed",
+    "motor": {
+      "type": "points",
+      "interp": "hold",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          1880
+        ],
+        [
+          3.4,
+          0
+        ]
+      ]
+    },
+    "steering": 0.0
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "description": "Longitudinal dynamics: torque step from rest on flat ground, then coast. Identify the motor-to-speed response.",
+  "scene": "flat",
+  "duration": 4.0,
+  "initial_state": { "position": [0, 0, null] },
+  "inputs": {
+    "motor_mode": "torque",
+    "motor": { "type": "step", "t0": 0.5, "value": 0.06, "t1": 2.5, "after": 0.0 },
+    "steering": 0.0
+  }
+}

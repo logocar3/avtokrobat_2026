@@ -1,0 +1,12 @@
+{
+  "description": "Closed-loop motor speed: a staircase of speed targets (rad/s at the motor), held by the on-board PI controller on the Hall sensor.",
+  "scene": "flat",
+  "duration": 6.0,
+  "initial_state": { "position": [0, 0, null] },
+  "inputs": {
+    "motor_mode": "speed",
+    "motor": { "type": "points", "interp": "hold",
+               "points": [[0, 0], [0.5, 300], [2.0, 600], [3.5, 1000], [5.0, 0]] },
+    "steering": 0.0
+  }
+}

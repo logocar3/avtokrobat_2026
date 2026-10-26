@@ -1,0 +1,25 @@
+# Unity-generated folders (regenerated on open)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+
+# never version these
+*.csproj
+*.sln
+*.unityproj
+*.booproj
+.vs/
+.idea/
+.vsconfig
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NOTE: Assets/StreamingAssets/*.json are the exported recording. They are the
+# input to the viewer, so they are intentionally NOT ignored - keep them tracked.

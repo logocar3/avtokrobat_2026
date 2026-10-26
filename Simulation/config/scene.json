@@ -1,0 +1,87 @@
+{
+  "_comment": "Milestone 1 jump configuration. Ramp geometry is relative to the vehicle wheelbase. Driver switch times are tuned to this scene + the RCCar stand-in; re-tune throttle_off_time/brake_time if you change geometry or vehicle.",
+  "sim": {
+    "step_size": 0.001,
+    "log_every": 20,
+    "render_every": 20,
+    "duration": 8.0,
+    "loop_pause": 1.5
+  },
+  "vehicle": {
+    "init_xyz": [0.0, 0.0, 0.3],
+    "init_yaw_deg": 0.0,
+    "_contact": "SMC = compliant rubber-like contact (smooth, ~1 g cornering, faster); NSC = rigid contact (chatters / stick-slips at mu > 1). Effective grip = min(tire.mu, scene.friction).",
+    "contact_method": "SMC",
+    "tire": {
+      "mu": 1.1,
+      "restitution": 0.1,
+      "young_modulus": 2e7
+    }
+  },
+  "camera": {
+    "_comment": "Live-3D chase camera start view. angle_deg=90 => side-on view that follows the car (0=behind). In the window: arrows orbit/zoom, PgUp/PgDn raise/lower, keys 1-5 switch mode. Keyboard changes persist.",
+    "target_z": 0.8,
+    "distance": 9.0,
+    "height": 2.0,
+    "angle_deg": 90.0
+  },
+  "scene": {
+    "ramp_angle_deg": 15.0,
+    "lip_height_wb": 0.4,
+    "gap_wb": 0.6,
+    "runup_end_x": 6.0,
+    "width": 8.0,
+    "_friction": "ground surface (asphalt-like); with SMC young_modulus is its contact stiffness [Pa]",
+    "friction": 1.1,
+    "restitution": 0.01,
+    "young_modulus": 2e8
+  },
+  "driver": {
+    "settle_time": 0.5,
+    "throttle_off_time": 2.8,
+    "brake_time": 3.4,
+    "brake_level": 0.6,
+    "_steering": "piecewise-linear [t, cmd] schedule, cmd in [-1, 1], + = left. Default: straight through the jump, then a gentle left turn on the run-out.",
+    "steering": [[0.0, 0.0], [4.0, 0.0], [4.4, 0.3], [5.4, 0.3], [5.8, 0.0]]
+  },
+  "actuators": {
+    "servo_max_rate_deg_s": 600.0
+  },
+  "controller": {
+    "_comment": "On-board controller (src/firmware/ak_controller.c), used by the live server. control_every = physics steps per control period (1 => 1 kHz, 5 => 200 Hz). The Unity PhysX engine always runs its controller every 1 ms step. Speed mode: PI on the Hall speed estimate over speed_window seconds; gains in N m per rad/s (kp) and N m per rad (ki).",
+    "control_every": 1,
+    "speed_kp": 0.00025,
+    "speed_ki": 0.0015,
+    "speed_window": 0.02
+  },
+  "server": {
+    "_comment": "Live simulation server for the Unity control panel (src/sim_server.py).",
+    "port": 5555,
+    "frame_hz": 60.0,
+    "max_log_seconds": 300.0,
+    "max_motor_speed": 2000.0,
+    "_scene_overrides": "applied on top of 'scene' for live driving only: a wider ground so you can steer around (the jump run keeps width 8).",
+    "scene_overrides": {"width": 40.0}
+  },
+  "sensors": {
+    "_comment": "Simulated on-board sensors (src/sensors.py). mount_xyz is in the chassis COG frame (x fwd, y left, z up), metres. external.csv / internal.csv are written every log_every sim steps.",
+    "log_every": 5,
+    "seed": 0,
+    "accelerometer": {
+      "mount_xyz": [0.0, 0.0, 0.0],
+      "noise_std": 0.05,
+      "bandwidth_hz": 50.0
+    },
+    "lidar": {
+      "_comment": "VL53L5CX-like 8x8 multizone ToF on the front bumper, tilted down.",
+      "zones": 8,
+      "fov_deg": 45.0,
+      "rate_hz": 15.0,
+      "max_range": 4.0,
+      "min_range": 0.02,
+      "noise_std": 0.005,
+      "mount_xyz": [0.36, 0.0, 0.02],
+      "pitch_down_deg": 15.0
+    }
+  }
+}

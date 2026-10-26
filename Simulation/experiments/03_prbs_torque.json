@@ -1,0 +1,12 @@
+{
+  "description": "Persistently exciting input for black-box identification: PRBS torque around an operating point.",
+  "scene": "flat",
+  "duration": 6.0,
+  "seed": 1,
+  "initial_state": { "position": [0, 0, null] },
+  "inputs": {
+    "motor_mode": "torque",
+    "motor": { "type": "prbs", "amp": 0.03, "offset": 0.05, "period": 0.1, "t0": 0.5, "t1": 6.0, "seed": 7 },
+    "steering": 0.0
+  }
+}

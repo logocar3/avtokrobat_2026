@@ -1,0 +1,11 @@
+{
+  "description": "Lateral dynamics: starts already rolling at 3 m/s, speed held at ~3 m/s (402 rad/s at the motor), steering chirp 0.2 -> 3 Hz.",
+  "scene": "flat",
+  "duration": 10.0,
+  "initial_state": { "position": [0, 0, null], "speed": 3.0 },
+  "inputs": {
+    "motor_mode": "speed",
+    "motor": 402.0,
+    "steering": { "type": "chirp", "amp": 0.15, "f0": 0.2, "f1": 3.0, "t0": 1.0, "t1": 9.0 }
+  }
+}

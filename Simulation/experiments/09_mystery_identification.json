@@ -1,0 +1,47 @@
+{
+  "description": "Identification task: the mystery car (cars/mystery_A.car, parameters hidden, no truth.csv). Torque steps up and down, a coast-down, then a steering step at speed. Identify mass, motor torque constant, gear ratio, drag, delays and steering gain from internal.csv / external.csv.",
+  "car": "mystery_A.car",
+  "scene": "flat",
+  "duration": 9.0,
+  "initial_state": {
+    "position": [
+      0,
+      0,
+      null
+    ]
+  },
+  "inputs": {
+    "motor_mode": "torque",
+    "motor": {
+      "type": "points",
+      "interp": "hold",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0.03
+        ],
+        [
+          2.0,
+          0.06
+        ],
+        [
+          3.5,
+          0
+        ],
+        [
+          6.0,
+          0.04
+        ]
+      ]
+    },
+    "steering": {
+      "type": "step",
+      "t0": 7.0,
+      "value": 0.15
+    }
+  }
+}

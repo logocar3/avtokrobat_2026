@@ -1,0 +1,25 @@
+{
+  "description": "Environment demo (Unity engine): ~3 m/s through obstacle_course.json - weave through the cone gates (0.02 rad steering cosine, 2 full periods; the 0.18 m wheelbase turns tight), over the bump and the tilted plank, across the ice patch to the wall.",
+  "scene": "obstacle_course",
+  "duration": 10.0,
+  "initial_state": {
+    "position": [
+      -15,
+      0,
+      null
+    ],
+    "speed": 3.0
+  },
+  "inputs": {
+    "motor_mode": "speed",
+    "motor": 805,
+    "steering": {
+      "type": "sine",
+      "amp": 0.02,
+      "freq": 0.5,
+      "phase_deg": 90,
+      "t0": 1.0,
+      "t1": 5.0
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "name": "Example student car",
+  "description": "Example of a student-built car (copy of udirc_1610s.json, changed): rear-wheel drive with a locked rear diff (spool), lighter (2S pack), 5000KV motor with a 13:1 gear, softer springs.",
+  "geometry_m": {
+    "length": 0.292,
+    "width": 0.225,
+    "height": 0.127,
+    "wheelbase": 0.18,
+    "track": 0.18,
+    "tire_radius": 0.0425,
+    "ground_clearance": 0.024,
+    "tire_width": 0.0445,
+    "_sources": "Banggood UDIRC 1610S listing (292x225x127 mm, wheelbase/track 180 mm, tyre 85x44.5 mm, clearance 24 mm); udirc.com/products/ud1610s"
+  },
+  "motor_model": {
+    "_note": "Used by the simulated Hall sensor + ESC torque signal (src/sensors.py, src/actuators.py). pole_pairs=2 assumes the usual 4-pole 2845 can (verify on the real motor). kt = 60/(2*pi*KV) = 60/(2*pi*4700). The stock 1610S motor is sensorless; this models a sensored (3x Hall) replacement.",
+    "gear_ratio": 13.0,
+    "pole_pairs": 2,
+    "kv_rpm_per_v": 5000,
+    "kt_nm_per_a": 0.002032,
+    "esc_max_current_a": 60,
+    "name": "2845 4700KV (UDIRC BL2845-47), stock sensorless; Hall sensors assumed for the sim",
+    "resistance_ohm": 0.011,
+    "no_load_current_a": 3.5,
+    "rotor_inertia_kgm2": 1e-06,
+    "max_current_a": 60,
+    "_estimates": "R line-to-line ~0.012-0.016 ohm scaled (R ~ 1/KV^2) from 2845 siblings; no-load current ~3-4 A from Hobbywing 2840/2850 4700KV (3.1/4.3 A); rotor J ~1e-6 kg m^2 from a ~38 g, 14 mm rotor. None published by UDIRC: measure (VESC detection gives R, L)."
+  },
+  "battery": {
+    "cells": 2,
+    "cell_voltage": 4.0,
+    "internal_resistance_ohm": 0.03,
+    "_note": "bundled 3S 11.1 V 2400 mAh XT60 (UDIRC MB-XT2411). cell_voltage is open-circuit (4.2 full, 3.7 nominal). Internal resistance is an estimate for a 50C 2400 mAh pack."
+  },
+  "vesc": {
+    "command_delay_s": 0.002,
+    "current_time_constant_s": 0.001,
+    "motor_current_max_a": 60,
+    "motor_current_min_a": -60,
+    "battery_current_max_a": 60,
+    "battery_current_min_a": -20,
+    "max_duty": 0.95,
+    "substeps": 10,
+    "_note": "Torque (current) control. command_delay = UART 115200 COMM_SET_CURRENT packet (~0.9 ms on the wire) + comm thread / next control cycle; CAN ~0.25 ms. current_time_constant = VESC Tool FOC detection default tc 1000 us (Kp = L/tc, Ki = R/tc -> ~160 Hz bandwidth). Limits mirror mcconf l_current_max/min (60 A default = stock ESC rating), l_in_current_max/min, l_max_duty 0.95. Source: github.com/vedderb/bldc mcconf_default.h, conf_general.c. Use 3S: VESC default 8 V minimum rules out 2S."
+  },
+  "unity_model": {
+    "mass_kg": 1.25,
+    "wheel_mass_kg": 0.069,
+    "inertia_rpy_kgm2": [
+      0.0068,
+      0.0105,
+      0.0141
+    ],
+    "com_height_m": 0.01,
+    "com_forward_m": 0.0,
+    "suspension_travel_m": 0.027,
+    "spring_n_per_m": 250,
+    "damper_ns_per_m": 6,
+    "max_steer_deg": 28,
+    "servo_rate_deg_s": 600,
+    "gear_efficiency": 0.9,
+    "motor_axis": "longitudinal",
+    "launch_speed_m_s": 7.0,
+    "_note": "Unity PhysX car (UnityPhysicsController.cs). Inertia = box placeholder scaled to 1.40 kg (measure: pendulum/CAD). wheel mass from UDIRC spare-part weights (4 wheels+tyres ~276 g). Travel = 18 mm shock stroke x ~1.5 motion ratio. Spring/damper chosen for ~4-5 Hz, zeta ~0.5 (not published). max_steer_deg not published (25-30 typical). motor_axis: longitudinal assumed (spur on the centre shaft); it sets which body axis the rotor's reaction torque acts on. launch_speed: scripted-run speed target (the throttle phase of config/scene.json driver runs in speed mode).",
+    "accel_mount_xyz": [
+      0.0,
+      0.0,
+      0.01
+    ],
+    "lidar_mount_xyz": [
+      0.146,
+      0.0,
+      0.03
+    ],
+    "_mounts": "sensor mounts in the body frame (x fwd, y left, z up) from mid-wheelbase on the axle line: accelerometer at the COM, lidar on the front bumper (length/2 ahead, ~7 cm above the ground). Lidar FoV/rate/tilt and sensor noise come from config/scene.json -> sensors.",
+    "brake_torque_fraction": 0.45,
+    "reverse_torque_fraction": 0.5,
+    "tire": {
+      "mu": 1.0,
+      "Bx": 12,
+      "Cx": 1.4,
+      "By": 15,
+      "Cy": 1.3,
+      "v_reg": 0.7,
+      "rolling_resistance": 0.015,
+      "substeps": 20,
+      "_note": "UdircSim tyre model: F = mu N sin(C atan(B s)); s = slip ratio (x) or slip angle in rad (y); friction circle; Unity's WheelCollider only does suspension + contact. Estimates for RC rubber on a hard surface, not measured.",
+      "diff_damping": 0.005,
+      "_diff": "diff_damping: internal friction of the open front/rear diffs, as a torque against the left/right speed difference (N m s/rad). 0 = ideal open diff (one spinning wheel runs away and yaws the car)."
+    },
+    "_brakes": "brake_torque_fraction caps torque that opposes the motion in speed mode and for the keyboard (RC-ESC-like brake strength); the keyboard reverses at reverse_torque_fraction once stopped. Experiment torque mode stays pure torque (negative = reverse).",
+    "drivetrain": "rwd",
+    "front_diff": "open",
+    "rear_diff": "locked",
+    "_drivetrain": "drivetrain: 4wd (locked centre shaft, the 1610S), rwd or fwd (the other axle rolls free). front_diff / rear_diff: open (equal torque left/right) or locked (spool: both wheels at the same speed); only matters on a driven axle."
+  }
+}

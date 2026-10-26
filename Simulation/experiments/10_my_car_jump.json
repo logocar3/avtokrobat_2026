@@ -1,0 +1,35 @@
+{
+  "description": "Your own car on the jump: the example student car (cars/example_student_car.json) in speed mode to ~6 m/s, coast through the air, brake after landing. Change \"car\" to your car's file name.",
+  "car": "example_student_car",
+  "scene": "jump",
+  "duration": 6.0,
+  "initial_state": {
+    "position": [
+      0,
+      0,
+      null
+    ]
+  },
+  "inputs": {
+    "motor_mode": "speed",
+    "motor": {
+      "type": "points",
+      "interp": "hold",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          1835
+        ],
+        [
+          3.4,
+          0
+        ]
+      ]
+    },
+    "steering": 0.0
+  }
+}

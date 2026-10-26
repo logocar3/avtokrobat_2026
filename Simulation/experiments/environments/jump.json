@@ -1,0 +1,10 @@
+{
+  "description": "The M1 jump: 9 m run-up, 15 deg ramp to a 1.11 m lip, 1.67 m gap, landing slope, 20 m run-out (all 8 m wide). Same geometry as the Chrono scene.",
+  "start": { "position": [0, 0, null], "yaw_deg": 0 },
+  "pieces": [
+    { "type": "ground", "name": "run-up",   "x": [-3, 6],          "width": 8 },
+    { "type": "ramp",   "name": "take-off", "x": [6, 10.144],      "z": [0, 1.1104], "width": 8, "color": [0.85, 0.5, 0.35] },
+    { "type": "ramp",   "name": "landing",  "x": [11.81, 15.954],  "z": [1.1104, 0], "width": 8, "color": [0.85, 0.5, 0.35] },
+    { "type": "ground", "name": "run-out",  "x": [15.954, 35.954], "width": 8 }
+  ]
+}
